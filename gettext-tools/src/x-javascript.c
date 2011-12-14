@@ -645,8 +645,10 @@ phase3_getc ()
                   for (;;)
                     {
                       c = phase2_getc ();
-                      if (c == UEOF || c == '\n')
+                      if (c == UEOF || c == '\n') {
+                        comment_line_end ();
                         break;
+                      }
                       /* We skip all leading white space, but not EOLs.  */
                       if (!(comment_at_start () && (c == ' ' || c == '\t')))
                         comment_add (c);
@@ -667,9 +669,10 @@ phase3_getc ()
                       if (c == '*')
                         {
                           c = phase2_getc ();
-                          if (c == '/')
+                          if (c == '/') {
+                            comment_line_end ();
                             break;
-                          else
+                          } else
                             phase2_ungetc (c);
                         }
                       comment_add (c);

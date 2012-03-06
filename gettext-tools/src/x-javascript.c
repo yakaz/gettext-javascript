@@ -666,7 +666,13 @@ phase3_getc ()
                       c = phase2_getc ();
                       if (c == UEOF)
                         break;
-                      if (c == '*')
+                      if (c == '\n')
+                        {
+                          comment_line_end ();
+                          comment_start ();
+                          continue;
+                        }
+                      else if (c == '*')
                         {
                           c = phase2_getc ();
                           if (c == '/') {
